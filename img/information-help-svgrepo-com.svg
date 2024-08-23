@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 60 60"
+   version="1.1"
+   id="svg18495"
+   sodipodi:docname="add_2.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview18497"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="0.23201941"
+     inkscape:cx="226.27417"
+     inkscape:cy="474.09826"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg18495" />
+  <defs
+     id="defs18492">
+    <style
+       id="style18490">
+      .cls-1 {
+        fill: #699f4c;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle
+     style="opacity:1;fill:#fffff3;fill-opacity:1;stroke-width:0.162768"
+     id="path19804"
+     cx="30"
+     cy="30"
+     r="30" />
+  <path
+     class="cls-1"
+     d="M 30,60 A 30,30 0 1 1 60,30 30,30 0 0 1 30,60 Z M 44,26 H 34 V 16 a 4,4 0 0 0 -8,0 V 26 H 16 a 4,4 0 0 0 0,8 h 10 v 10 a 4,4 0 0 0 8,0 V 34 h 10 a 4,4 0 0 0 0,-8 z"
+     id="add"
+     style="fill:#47d62e;fill-opacity:1;fill-rule:evenodd" />
+</svg>

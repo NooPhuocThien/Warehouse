@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   height="800px"
+   width="800px"
+   version="1.1"
+   id="Layer_1"
+   viewBox="0 0 512 512"
+   xml:space="preserve"
+   sodipodi:docname="information-help-svgrepo-com.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs7010" /><sodipodi:namedview
+   id="namedview7008"
+   pagecolor="#505050"
+   bordercolor="#eeeeee"
+   borderopacity="1"
+   inkscape:showpageshadow="0"
+   inkscape:pageopacity="0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#505050"
+   showgrid="false"
+   inkscape:zoom="0.46403883"
+   inkscape:cx="363.11617"
+   inkscape:cy="282.30396"
+   inkscape:window-width="1366"
+   inkscape:window-height="705"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<path
+   style="fill:#3b9004;fill-opacity:1"
+   d="M256,512C114.837,512,0,397.157,0,256S114.837,0,256,0s256,114.843,256,256S397.163,512,256,512z"
+   id="path6991" />
+
+<path
+   style="fill:#ffffff;fill-opacity:1;stroke-width:1.06374"
+   d="m 255.80161,493.00066 c -130.57513,0 -236.8,-106.23018 -236.8,-236.8 0,-130.56982 106.22487,-236.799999 236.8,-236.799999 130.57513,0 236.8,106.231249 236.8,236.799999 0,130.56875 -106.22487,236.8 -236.8,236.8 z"
+   id="path6995" />
+
+<circle
+   style="fill:#3b9004;fill-opacity:1"
+   cx="256"
+   cy="122.435"
+   r="33.391"
+   id="circle6999" />
+
+<path
+   style="fill:#3b9004;fill-opacity:1"
+   d="M256,422.957L256,422.957c-18.442,0-33.391-14.949-33.391-33.391V222.609  c0-18.442,14.949-33.391,33.391-33.391l0,0c18.442,0,33.391,14.949,33.391,33.391v166.956  C289.391,408.007,274.442,422.957,256,422.957z"
+   id="path7003" />
+
+</svg>

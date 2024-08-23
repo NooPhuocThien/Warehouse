@@ -1,0 +1,1623 @@
+
+// AUTO COMPLETED FOR INBOUND AND OUTBOUND
+arr1 = ["Apple", "Banana", "Cherry", "Date", "Fig", "Grape"];
+// arr1 = name_array
+arr2 = ["Description 1", "Description 2", "Description 3", "Description 4", "Description 5", "Description 6"];
+arr3 = ["Value 1", "Value 2", "Value 3", "Value 4", "Value 5", "Value 6"];
+
+console.log[arr1]
+// Hàm xử lý autocomplete
+function autocomplete_2(inp, dataArray, relatedInp1, relatedArray1, relatedInp2, relatedArray2) {
+    var currentFocus;
+
+    function setupAutocomplete() {
+        inp.addEventListener("input", function(e) {
+            var val = this.value;
+            closeAllLists();
+            if (!val) { return false; }
+            currentFocus = -1;
+            var a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete_2-list");
+            a.setAttribute("class", "autocomplete_2-items");
+            this.parentNode.appendChild(a);
+
+            // Lấy mảng dữ liệu phù hợp
+            var matches = dataArray.filter(function(item) {
+                return item.toUpperCase().includes(val.toUpperCase());
+            });
+
+            for (var i = 0; i < matches.length; i++) {
+                var b = document.createElement("DIV");
+                // Đánh dấu phần khớp
+                var index = matches[i].toUpperCase().indexOf(val.toUpperCase());
+                b.innerHTML = matches[i].substr(0, index);
+                b.innerHTML += "<strong>" + matches[i].substr(index, val.length) + "</strong>";
+                b.innerHTML += matches[i].substr(index + val.length);
+                b.innerHTML += "<input type='hidden' value='" + matches[i] + "'>";
+                b.addEventListener("click", function(e) {
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    var index = dataArray.indexOf(inp.value);
+                    if (index !== -1) {
+                        relatedInp1.value = relatedArray1[index];
+                        relatedInp2.value = relatedArray2[index];
+                    }
+                    closeAllLists();
+                });
+                a.appendChild(b);
+            }
+        });
+
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete_2-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) { // Phím mũi tên xuống
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode == 38) { // Phím mũi tên lên
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode == 13) { // Phím Enter
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+
+        function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            x[currentFocus].classList.add("autocomplete_2-active");
+        }
+
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete_2-active");
+            }
+        }
+
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete_2-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    // Gọi hàm setupAutocomplete() để khởi tạo tính năng autocomplete cho input
+    setupAutocomplete();
+}
+
+// Hàm thêm dòng mới vào bảng
+function addRow() {
+    var table = document.getElementById("inbound_table_id");
+    var row = table.insertRow(-1); // Thêm dòng vào cuối bảng
+
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    // Tạo các input mới
+    var input1 = document.createElement("input");
+    input1.type = "search";
+    input1.name = "column1[]"; // Điều chỉnh thuộc tính name tùy theo cần thiết
+    input1.className = "inbound_input";
+    cell1.appendChild(input1);
+
+    var input2 = document.createElement("input");
+    input2.type = "search";
+    input2.name = "column2[]"; // Điều chỉnh thuộc tính name tùy theo cần thiết
+    input2.className = "inbound_input";
+    cell2.appendChild(input2);
+
+    var input3 = document.createElement("input");
+    input3.type = "search";
+    input3.name = "column3[]"; // Điều chỉnh thuộc tính name tùy theo cần thiết
+    input3.className = "inbound_input";
+    cell3.appendChild(input3);
+
+    var input4 = document.createElement("input");
+    input4.type = "search";
+    input4.name = "column4[]"; // Điều chỉnh thuộc tính name tùy theo cần thiết
+    input4.className = "inbound_input";
+    cell4.appendChild(input4);
+
+    // Áp dụng autocomplete cho từng input mới
+    autocomplete_2(input1, arr1, input2, arr2, input3, arr3);
+    autocomplete_2(input2, arr2, input1, arr1, input3, arr3);
+    autocomplete_2(input3, arr3, input1, arr1, input2, arr2);
+    autocomplete_2(input4, arr1, input1, arr1, input3, arr3);
+}
+
+// Khởi tạo autocomplete cho các input ban đầu
+document.addEventListener("DOMContentLoaded", function() {
+    autocomplete_2(document.getElementById("input1"), arr1, document.getElementById("input2"), arr2, document.getElementById("input3"), arr3);
+    autocomplete_2(document.getElementById("input2"), arr2, document.getElementById("input1"), arr1, document.getElementById("input3"), arr3);
+    autocomplete_2(document.getElementById("input3"), arr3, document.getElementById("input1"), arr1, document.getElementById("input2"), arr2);
+    autocomplete_2(document.getElementById("input4"), arr1, document.getElementById("input1"), arr1, document.getElementById("input3"), arr3);
+});
+// AUTO COMPLETED FOR INBOUND AND OUTBOUND
+
+
+
+
+
+
+
+
+
+//jsjsjsjsjsjsjsjsjjsjsj----------------------------------------------------------------------------
+
+
+
+// Get data from data base to do Cad file
+var value_inout;
+var id_array = []
+var code_array = []
+var name_array = []
+var spec_array = []
+var position_array = []
+var project_array = []
+var quantity_array = []
+var quantity_safety_array = []
+var unit_array = []
+var price_array = []
+var position_array = []
+var type_array = []
+var update_time_array = []
+var picture_array =[]
+var all_array = []
+
+
+
+function login_ui(){
+      var button_home_id = document.getElementById("button_home_id");
+      button_home_id.style.backgroundColor = color_1
+      button_home_id.style.color = color_2
+
+
+      var loginContainer = document.getElementById("loginContainer")
+      loginContainer.style.display = 'flex'
+      var add_id = document.getElementById("add_id");
+      add_id.style.display = "none";
+      var home_class_id = document.getElementById("home_class_id")
+      home_class_id.style.display = "none";
+      var search_result_id = document.getElementById("search_result_id");
+      search_result_id.style.display = "none";
+      var reload_id = document.getElementById("reload_id")
+      reload_id.style.display = "none";
+      var history_class_id = document.getElementById("history_class_id")
+      history_class_id.style.display = "none";
+      var inbound_id = document.getElementById("inbound_id")
+      inbound_id.style.display = "none";
+      var search_button_id = document.getElementById("search_button_id")
+      search_button_id.style.display = "none";
+      var sign_button_id = document.getElementById("sign_button_id")
+      sign_button_id.style.display = "flex";
+      var inout_search_table_id = document.getElementById("inout_search_table_id")
+      inout_search_table_id.style.display = "none";
+      var outbound_id = document.getElementById("outbound_id")
+      outbound_id.style.display = "none";
+      var safety_stock_id = document.getElementById("safety_stock_id")
+      safety_stock_id.style.display = "none";
+}
+
+function user_permission(){
+  document.getElementById('button_add_new_id').style.display = 'none';
+  document.getElementById('button_history_id').style.display = 'none';
+  document.getElementById('button_inbound_id').style.display = 'none';
+  document.getElementById('button_outbound_id').style.display = 'none';
+  document.getElementById('edit_button_id').style.display = 'none';
+
+}
+function admin_permisstion(){
+  document.getElementById('button_add_new_id').style.display = 'flex';
+  document.getElementById('button_history_id').style.display = 'flex';
+  document.getElementById('button_inbound_id').style.display = 'flex';
+  document.getElementById('button_outbound_id').style.display = 'flex';
+  document.getElementById('edit_button_id').style.display = 'flex';
+}
+
+
+
+
+
+var loggedInUser = localStorage.getItem('loggedInUser');
+var isAdmin = localStorage.getItem('isAdmin');
+var loginContainer = document.getElementById('loginContainer');
+var logoutButton = document.getElementById('logout_button_id');
+var login_name
+
+
+function login_function(){
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    // Mô phỏng kiểm tra đăng nhập
+    if (username === 'admin' && password === 'admin') {
+        login_name = username
+        document.getElementById('user_text_id').textContent = login_name;
+        localStorage.setItem('loggedInUser', username);
+        localStorage.setItem('isAdmin', true);
+        document.getElementById('logout_button_id').style.display = 'block';
+        document.getElementById('login_button_id').style.display = 'none';
+        loginContainer.style.display = 'none';
+        admin_permisstion()
+        home();
+        } else {
+        document.getElementById('loginMessage').style.color = 'red'
+        document.getElementById('loginMessage').textContent = 'User name or password wrong!';
+              }
+            }
+          )
+        }
+
+
+function logout_ui() {
+  localStorage.removeItem('loggedInUser');
+  localStorage.removeItem('isAdmin');
+  document.getElementById('user_text_id').textContent = 'User';
+  document.getElementById('logout_button_id').style.display = 'none';
+  document.getElementById('login_button_id').style.display = 'flex';
+  document.getElementById('loginMessage').textContent = '';
+  user_permission()
+  home()
+}
+
+
+
+
+
+
+
+var now = new Date();
+// Format ngày tháng năm thành yyyy-MM-ddThh:mm để gán cho input type="datetime-local"
+var year = now.getFullYear();
+var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Thêm 0 vào trước nếu là tháng từ 1-9
+var day = now.getDate().toString().padStart(2, '0'); // Thêm 0 vào trước nếu là ngày từ 1-9
+var hours = now.getHours().toString().padStart(2, '0'); // Thêm 0 vào trước nếu là giờ từ 0-9
+var minutes = now.getMinutes().toString().padStart(2, '0'); // Thêm 0 vào trước nếu là phút từ 0-9
+
+var today = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+var arr1
+var arr2
+var arr3
+
+
+
+
+
+// Gán giá trị cho input
+// document.getElementById('current_date_time').textContent  = today;
+// document.getElementById('current_date_time_2').textContent  = today;
+var color_main = getComputedStyle(document.documentElement).getPropertyValue('--main-color');
+var color_1 = getComputedStyle(document.documentElement).getPropertyValue('--color_1');
+var color_2 = getComputedStyle(document.documentElement).getPropertyValue('--color_2');
+
+
+
+
+
+window.syntaxHighlight = function (json) {
+    json = JSON.stringify(json, undefined, 4)
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    json = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number'
+        if ((/^"/).test(match)) {
+            if ((/:$/).test(match)) {
+                cls = 'key'
+            } else {
+                cls = 'string'
+            }
+        } else if ((/true|false/).test(match)) {
+            cls = 'boolean'
+        } else if ((/null/).test(match)) {
+            cls = 'null'
+        }
+        return '<span class="' + cls + '">' + match + '</span>'
+    })
+    return json
+} // --- End of syntaxHighlight --- //
+
+
+
+function autocomplete(inp, arr) {
+    var currentFocus;
+  
+    inp.addEventListener("input", function(e) {
+      var val = this.value;
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+  
+      var a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      this.parentNode.appendChild(a);
+  
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].toUpperCase().includes(val.toUpperCase())) {
+          var b = document.createElement("DIV");
+          b.innerHTML = arr[i].replace(new RegExp(val, 'gi'), "<strong>$&</strong>");
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          b.addEventListener("click", function(e) {
+            inp.value = this.getElementsByTagName("input")[0].value;
+            closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+    });
+  
+    inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        currentFocus++;
+        addActive(x);
+      } else if (e.keyCode == 38) {
+        currentFocus--;
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        e.preventDefault();
+        if (currentFocus > -1) {
+          if (x) x[currentFocus].click();
+        }
+      }
+    });
+  
+    function addActive(x) {
+      if (!x) return false;
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (x.length - 1);
+      x[currentFocus].classList.add("autocomplete-active");
+    }
+  
+    function removeActive(x) {
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+  
+    function closeAllLists(elmnt) {
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+    });
+  }
+  
+
+
+  function search_type_name(){
+    var input_type_search_id = document.getElementById("input_type_search_id").value
+    var inputElement = document.getElementById('myInput');
+    var data_for_search
+    if(input_type_search_id == 'name'){
+        data_for_search = name_array
+        inputElement.placeholder = 'Search Component follow Name';
+    }
+    if(input_type_search_id == 'spec'){
+        data_for_search = spec_array
+        inputElement.placeholder = 'Search Component follow Spec';
+    }
+    if(input_type_search_id == 'position'){
+        data_for_search =position_array
+        inputElement.placeholder = 'Search Component follow Position';
+    }
+    if(input_type_search_id == 'project'){
+        data_for_search = project_array
+
+        inputElement.placeholder = 'Search Component follow Project';
+    }
+    if(input_type_search_id == 'code'){
+        data_for_search = ''
+        inputElement.placeholder = 'Enter Your Code Here';
+    }
+    autocomplete(document.getElementById("myInput"), data_for_search);
+    autocomplete(document.getElementById("myInput_2"), data_for_search);
+  }
+
+
+function home_table(){
+
+  var tableBody = document.querySelector('#my-table tbody');
+
+    // Loop through the arrays
+    for (var i = 0; i < id_array.length; i++) {
+        // Create a new row
+        var row = document.createElement('tr');
+
+        // Create and append each cell (td) to the row
+        var idCell = document.createElement('td');
+        idCell.textContent = id_array[i];
+        row.appendChild(idCell);
+
+        var nameCell = document.createElement('td');
+        nameCell.textContent = name_array[i];
+        row.appendChild(nameCell);
+
+        var codeCell = document.createElement('td');
+        codeCell.textContent = code_array[i];
+        row.appendChild(codeCell);
+
+        var specCell = document.createElement('td');
+        specCell.textContent = spec_array[i];
+        row.appendChild(specCell);
+
+        var projectCell = document.createElement('td');
+        projectCell.textContent = project_array[i];
+        row.appendChild(projectCell);
+
+        var quantityCell = document.createElement('td');
+        quantityCell.textContent = quantity_array[i];
+
+        // Check if quantity is less than quantity_safety_array
+        if (quantity_array[i] < quantity_safety_array[i]) {
+            quantityCell.style.color = 'red'; // Set text color to red
+            // Move row to the top of the table
+            tableBody.insertBefore(row, tableBody.firstChild);
+        } else {
+            row.appendChild(quantityCell);
+        }
+
+        var quantitySafetyCell = document.createElement('td');
+        quantitySafetyCell.textContent = quantity_safety_array[i];
+        row.appendChild(quantitySafetyCell);
+
+        var unitCell = document.createElement('td');
+        unitCell.textContent = unit_array[i];
+        row.appendChild(unitCell);
+
+        var priceCell = document.createElement('td');
+        priceCell.textContent = price_array[i];
+        row.appendChild(priceCell);
+
+        var positionCell = document.createElement('td');
+        positionCell.textContent = position_array[i];
+        row.appendChild(positionCell);
+
+        var typeCell = document.createElement('td');
+        typeCell.textContent = type_array[i];
+        row.appendChild(typeCell);
+
+        var updateTimeCell = document.createElement('td');
+        updateTimeCell.textContent = update_time_array[i];
+        row.appendChild(updateTimeCell);
+
+        // Append the row to the table body
+        if (quantity_array[i] >= quantity_safety_array[i]) {
+            tableBody.appendChild(row);}
+        // Add click event listener to each row
+        (function(index) {
+          // Add click event listener to each row
+          row.addEventListener('click', function() {
+              var rowData = {
+                  id: id_array[index],
+                  name: name_array[index],
+                  code: code_array[index],
+                  spec: spec_array[index],
+                  project: project_array[index],
+                  quantity: quantity_array[index],
+                  quantity_safety: quantity_safety_array[index],
+                  unit: unit_array[index],
+                  price: price_array[index],
+                  position: position_array[index],
+                  type: type_array[index],
+                  update_time: update_time_array[index],
+              };
+              
+              show_information(rowData)
+          });
+      })(i);
+    }
+  }
+
+function show_information(rowData){
+  console.log("Clicked row data:", rowData);
+  var see_picture_id = document.getElementById("see_picture_id");
+  see_picture_id.style.display = "flex";
+  var  home_table_id  = document.getElementById("home_table_id");
+  home_table_id.style.display = "none";
+
+  document.getElementById('number_pic').innerText = rowData.id;
+  document.getElementById('component_pic').innerText = rowData.name;
+  document.getElementById('code_pic').innerText = rowData.code;
+  document.getElementById('spec_pic').innerText = rowData.spec;
+  document.getElementById('project_pic').innerText = rowData.project;
+  document.getElementById('quantity_pic').innerText = rowData.quantity;
+  document.getElementById('quantity_safety_pic').innerText = rowData.quantity_safety;
+  document.getElementById('unit_pic').innerText = rowData.unit;
+  document.getElementById('price_pic').innerText = rowData.price;
+  document.getElementById('position_pic').innerText = rowData.position;
+  document.getElementById('type_pic').innerText = rowData.type;
+  document.getElementById('time_pic').innerText = rowData.update_time;
+
+  var index = id_array.indexOf(rowData.id);
+    if (index !== -1) {
+      var value_picture = picture_array[index]
+      document.getElementById('name_pic').innerText = value_picture
+      var picture = '<img src="pic/'+ value_picture + '" class="icon_test">'
+      document.getElementById('pic_id').innerHTML = picture
+      }
+}
+
+
+
+
+
+
+function home(){
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor = color_2
+    button_home_id.style.color = color_1
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_1
+    button_add_new_id.style.color =  color_2
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_1
+    button_history_id.style.color =  color_2
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_1
+    button_safety_id.style.color =  color_2
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_1
+    button_inbound_id.style.color =  color_2
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_1
+    button_outbound_id.style.color =  color_2
+
+
+    
+    var loginContainer = document.getElementById("loginContainer");
+    loginContainer.style.display = "none";
+    var add_id = document.getElementById("add_id");
+    add_id.style.display = "none";
+    var home_class_id = document.getElementById("home_class_id")
+    home_class_id.style.display = "flex";
+    var search_result_id = document.getElementById("search_result_id");
+    search_result_id.style.display = "none";
+    var reload_id = document.getElementById("reload_id")
+    reload_id.style.display = "flex";
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "none";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+    var search_button_id = document.getElementById("search_button_id")
+    search_button_id.style.display = "none";
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "flex";
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+    
+    
+
+    var msg = {
+        topic: "page_reload",
+        payload: {
+        }
+    };
+    uibuilder.send(msg);
+}
+
+
+  function getData(button) {
+    // Lấy ra dòng chứa button được click từ Table 1
+
+    var row = button.parentNode.parentNode;
+    // Lấy ra các giá trị cần thiết từ các ô trong dòng này
+    var id = row.cells[1].innerText;
+    var componentName = row.cells[2].innerText;
+    var specifications = row.cells[4].innerText;
+    var code = row.cells[3].innerText;
+    var position = row.cells[10].innerText;
+    var quantity = row.cells[6].innerText;
+    var unit = row.cells[8].innerText;
+
+    if(value_inout === 'inbound'){
+      var inbound_id = document.getElementById("inbound_id")
+      inbound_id.style.display = "flex";
+      var outbound_id = document.getElementById("outbound_id")
+      outbound_id.style.display = "none";
+      
+    // Tạo một hàng mới trong Table 2
+    var table2 = document.getElementById("inbound_table_id").getElementsByTagName("tbody")[0];
+    var newRow = table2.insertRow();
+  
+    // Thêm các giá trị vào hàng mới của Table 2
+    var inbound_cell1 = newRow.insertCell(0);
+    var inbound_cell2 = newRow.insertCell(1);
+    var inbound_cell3 = newRow.insertCell(2);
+    var inbound_cell4 = newRow.insertCell(3);
+    var inbound_cell5 = newRow.insertCell(4);
+    var inbound_cell6 = newRow.insertCell(5);
+    var inbound_cell7 = newRow.insertCell(6);
+    var inbound_cell8 = newRow.insertCell(7);
+  
+    inbound_cell1.innerText = id;
+    inbound_cell2.innerText = componentName;
+    inbound_cell3.innerText = specifications;
+    inbound_cell4.innerText = code;
+    inbound_cell5.innerText = position;
+    inbound_cell6.innerText = quantity;
+    inbound_cell7.innerText = unit;
+
+    var deleteButton = document.createElement("button_new");
+    deleteButton.className = 'button_remove_inoutdata'
+    var deleteIcon = document.createElement("img");
+    deleteIcon.className = 'icon_remove_inoutdata'
+    deleteIcon.src = "img/thungrac.svg"; // Đường dẫn đến hình ảnh xóa
+    deleteIcon.alt = "Delete";
+    deleteIcon.style.verticalAlign = "middle"; // Canh chỉnh hình ảnh theo chiều dọc
+    deleteButton.appendChild(deleteIcon);
+    deleteButton.onclick = function() { 
+      deleteRow(this);
+    };
+    inbound_cell8.appendChild(deleteButton);
+  
+    // Thêm ô input cho Quantity Input (cột cuối cùng)
+    var inputCell = newRow.insertCell(7);
+    var input = document.createElement("input");
+    input.type = "number";
+    input.name = "column8[]";
+    input.className = "inbound_input";
+    inputCell.appendChild(input);
+  }
+
+  else if(value_inout === 'outbound'){
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "flex";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+  // Tạo một hàng mới trong Table 2
+  var table2 = document.getElementById("outbound_table_id").getElementsByTagName("tbody")[0];
+  var newRow = table2.insertRow();
+
+  // Thêm các giá trị vào hàng mới của Table 2
+  var cell1 = newRow.insertCell(0);
+  var cell2 = newRow.insertCell(1);
+  var cell3 = newRow.insertCell(2);
+  var cell4 = newRow.insertCell(3);
+  var cell5 = newRow.insertCell(4);
+  var cell6 = newRow.insertCell(5);
+  var cell7 = newRow.insertCell(6);
+  var cell8 = newRow.insertCell(7);
+
+
+  cell1.innerText = id;
+  cell2.innerText = componentName;
+  cell3.innerText = specifications;
+  cell4.innerText = code;
+  cell5.innerText = position;
+  cell6.innerText = quantity;
+  cell7.innerText = unit;
+
+  var deleteButton = document.createElement("button_new");
+  deleteButton.className = 'button_remove_inoutdata'
+  var deleteIcon = document.createElement("img");
+  deleteIcon.className = 'icon_remove_inoutdata'
+  deleteIcon.src = "img/thungrac.svg"; // Đường dẫn đến hình ảnh xóa
+  deleteIcon.alt = "Delete";
+  deleteIcon.style.verticalAlign = "middle"; // Canh chỉnh hình ảnh theo chiều dọc
+  deleteButton.appendChild(deleteIcon);
+  deleteButton.onclick = function() { 
+    deleteRow(this);
+  };
+  cell8.appendChild(deleteButton);
+
+  // Thêm ô input cho Quantity Input (cột cuối cùng)
+  var inputCell = newRow.insertCell(7);
+  var input = document.createElement("input");
+  input.type = "number";
+  input.name = "column8[]";
+  input.className = "inbound_input";
+  inputCell.appendChild(input);
+
+  var inputCell = newRow.insertCell(8);
+  var input = document.createElement("input");
+  input.type = "text";
+  input.name = "column9[]";
+  input.className = "inbound_input";
+  inputCell.appendChild(input);
+}
+
+
+}
+
+  function deleteRow(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
+  
+
+
+  function history(){
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor =  color_1
+    button_home_id.style.color =  color_2
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_1
+    button_add_new_id.style.color =  color_2
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_2
+    button_history_id.style.color =  color_1
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_1
+    button_safety_id.style.color =  color_2
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_1
+    button_inbound_id.style.color =  color_2
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_1
+    button_outbound_id.style.color =  color_2
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+
+    var home_class_id = document.getElementById("home_class_id")
+    home_class_id.style.display = "none";
+
+    var add_id = document.getElementById("add_id")
+    add_id.style.display = "none";
+
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "flex";
+    var search_button_id = document.getElementById("search_button_id")
+    search_button_id.style.display = "none";
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "flex";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+    
+
+
+    var see_picture_id = document.getElementById("see_picture_id");
+    see_picture_id.style.display = "none";
+    var search_result_id = document.getElementById("search_result_id");
+    var add_id = document.getElementById("add_id");
+    var empty_id = document.getElementById("empty_id");
+    var result_add_id = document.getElementById("result_add_id");
+    var button_remove_id = document.getElementById("button_remove_id")
+    var edit_id = document.getElementById("edit_id")
+    var inoutdata_id = document.getElementById("inoutdata_id")
+
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+
+    inoutdata_id.style.display = "flex";
+    edit_id.style.display = "none";
+    button_remove_id.style.display = "none";
+    result_add_id.style.display = "none";
+    empty_id.style.display = "none";
+    search_result_id.style.display = "none";
+    add_id.style.display = "none";
+    result_add_id.style.display = "none";
+  }
+
+
+ function safety_stock(){
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor =  color_1
+    button_home_id.style.color =  color_2
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_1
+    button_add_new_id.style.color =  color_2
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_1
+    button_history_id.style.color =  color_2
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_2
+    button_safety_id.style.color =  color_1
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_1
+    button_inbound_id.style.color =  color_2
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_1
+    button_outbound_id.style.color =  color_2
+
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+
+    var home_class_id = document.getElementById("home_class_id")
+    home_class_id.style.display = "none";
+
+    var add_id = document.getElementById("add_id")
+    add_id.style.display = "none";
+
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "none";
+
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "flex";
+
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+
+    var msg = {
+        topic: "safety_stock",
+        payload: 'nothing'
+    };
+      uibuilder.send(msg);
+ }
+
+
+
+  function add(){
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor =  color_1
+    button_home_id.style.color =  color_2
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_2
+    button_add_new_id.style.color =  color_1
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_1
+    button_history_id.style.color =  color_2
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_1
+    button_safety_id.style.color =  color_2
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_1
+    button_inbound_id.style.color =  color_2
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_1
+    button_outbound_id.style.color =  color_2
+    
+    var add_id = document.getElementById("add_id")
+    add_id.style.display = "flex";
+    var home_class_id = document.getElementById("home_class_id");
+    home_class_id.style.display = "none";
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "none";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+    var search_button_id = document.getElementById("search_button_id")
+    search_button_id.style.display = "none";
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "flex";
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "none";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+  }
+
+
+  function inbound(){
+    value_inout = 'inbound'
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor =  color_1
+    button_home_id.style.color =  color_2
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_1
+    button_add_new_id.style.color =  color_2
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_1
+    button_history_id.style.color =  color_2
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_1
+    button_safety_id.style.color =  color_2
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_2
+    button_inbound_id.style.color =  color_1
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_1
+    button_outbound_id.style.color =  color_2
+
+    var home_class_id = document.getElementById("home_class_id")
+    home_class_id.style.display = "none";
+    var add_id = document.getElementById("add_id")
+    add_id.style.display = "none";
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "none";
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "flex";
+    var search_button_id = document.getElementById("search_button_id")
+    search_button_id.style.display = "flex";
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "none";
+    var inout_search_table_id = document.getElementById("inout_search_table_id")
+    inout_search_table_id.style.display = "flex";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+  }
+
+  function inbound_succes(){
+    var number_id_2 = document.getElementById("id_inbound_id").innerText
+    var user_name = document.getElementById("inbound_user_id").value
+    var quantity_input = document.getElementById("inbound_number_id").value
+    var date_time = document.getElementById("current_date_time").innerText
+    var msg = {
+        topic: "inbound",
+        payload: {
+            id:number_id_2,
+            user_name:user_name,
+            quantity_input:quantity_input,
+            date_time:date_time
+        }
+    };
+    uibuilder.send(msg);
+  }
+
+
+function outbound(){
+  value_inout = 'outbound'
+    var button_home_id = document.getElementById("button_home_id");
+    button_home_id.style.backgroundColor =  color_1
+    button_home_id.style.color =  color_2
+    var button_add_new_id = document.getElementById("button_add_new_id");
+    button_add_new_id.style.backgroundColor =  color_1
+    button_add_new_id.style.color =  color_2
+    var button_history_id = document.getElementById("button_history_id");
+    button_history_id.style.backgroundColor =  color_1
+    button_history_id.style.color =  color_2
+    var button_safety_id = document.getElementById("button_safety_id");
+    button_safety_id.style.backgroundColor =  color_1
+    button_safety_id.style.color =  color_2
+    var button_inbound_id = document.getElementById("button_inbound_id");
+    button_inbound_id.style.backgroundColor =  color_1
+    button_inbound_id.style.color =  color_2
+    var button_outbound_id = document.getElementById("button_outbound_id");
+    button_outbound_id.style.backgroundColor =  color_2
+    button_outbound_id.style.color =  color_1
+
+
+    var home_class_id = document.getElementById("home_class_id")
+    home_class_id.style.display = "none";
+    var add_id = document.getElementById("add_id")
+    add_id.style.display = "none";
+    var history_class_id = document.getElementById("history_class_id")
+    history_class_id.style.display = "none";
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "NONE";
+    var search_button_id = document.getElementById("search_button_id")
+    search_button_id.style.display = "flex";
+    var sign_button_id = document.getElementById("sign_button_id")
+    sign_button_id.style.display = "none";
+    var inout_search_table_id = document.getElementById("inout_search_table_id");
+    inout_search_table_id.style.display = "flex";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "flex";
+}
+
+
+  function outbound_succes(){
+    var number_id_2 = document.getElementById("id_outbound_id").innerText
+    var user_name = document.getElementById("outbound_user_id").value
+    var receive_name = document.getElementById("outbound_receive_id").value
+    var quantity_input = document.getElementById("outbound_number_id").value
+    var date_time = document.getElementById("current_date_time_2").innerText
+    var msg = {
+        topic: "outbound",
+        payload: {
+            id:number_id_2,
+            user_name:user_name,
+            quantity_input:quantity_input,
+            receive_name:receive_name,
+            date_time:date_time
+        }
+    };
+    uibuilder.send(msg);
+  }
+
+
+
+
+  function add_data(){
+    var component_id = document.getElementById("component_id").value;
+    var code_id = document.getElementById("code_id").value;
+    var spec_id = document.getElementById("spec_id").value;
+    var project_id = document.getElementById("project_id").value;
+    var quatity_id = document.getElementById("quatity_id").value;
+    var unit_id = document.getElementById("unit_id").value;  
+    var filePath = document.getElementById('picture_id').value;
+    var price_id = document.getElementById('price_id').value;
+    var position_id = document.getElementById('position_id').value;
+    var type_id = document.getElementById('type_id').value;
+    var fileName = filePath.split('\\').pop();
+    var quantity_safety = document.getElementById('quantity_safety_id').value;
+        
+    var msg = {
+        topic: "data",
+        payload: {
+            component: component_id,
+            code:code_id,
+            spec:spec_id,
+            project:project_id,
+            quatity:quatity_id,
+            quantity_safety:quantity_safety,
+            unit:unit_id,
+            price:price_id,
+            position:position_id,
+            type:type_id,
+            pic:fileName,
+        }
+    };
+    uibuilder.send(msg);
+    var result_add_id = document.getElementById("result_add_id");
+    result_add_id.style.display = "block";
+  }
+  
+  
+
+  function delete_val(){
+    console.log("ok")
+    document.getElementById("component_id").value = '';
+    document.getElementById("code_id").value = '';          
+    document.getElementById("spec_id").value = '';
+    document.getElementById("project_id").value = '';
+    document.getElementById("quatity_id").value = '';
+    document.getElementById("unit_id").value = '';
+    document.getElementById("price_id").value = '';
+    document.getElementById("position_id").value = '';
+    document.getElementById("type_id").value = '';
+    document.getElementById("picture_id").value = '';
+    document.getElementById("quantity_safety_id").value = '';
+  }
+
+
+  function delete_object(){
+    var number_2= document.getElementById("number_pic").innerText;
+    document.getElementById("add_number_id").innerText  = number_2
+    let text = "Are you sure you want to delete it?";
+    if (confirm(text) == true) {
+        var msg = {
+            topic: "delete_object",
+            payload: {
+                id:number_2,
+            }
+        };
+        uibuilder.send(msg);
+    } else {
+        var msg = {
+            topic: "nothing",
+            payload: {
+                id:number_2,
+            }
+        };
+        uibuilder.send(msg);
+    }
+    
+  }
+
+  function update_data(){
+    var number_id_2 = document.getElementById("add_number_edit_id").innerText
+    var component_id = document.getElementById("component_edit_id").value;
+    var code_id = document.getElementById("code_edit_id").value;
+    var spec_id = document.getElementById("spec_edit_id").value;
+    var project_id = document.getElementById("project_edit_id").value;
+    var unit_id = document.getElementById("unit_edit_id").value;  
+    var filePath = document.getElementById('picture_edit_id').value;
+    var price_id = document.getElementById('price_edit_id').value;
+    var position_id = document.getElementById('position_edit_id').value;
+    var type_id = document.getElementById('type_edit_id').value;
+    var fileName = filePath.split('\\').pop();
+    var quantity_safety = document.getElementById('safety_quantity_edit_id').value;
+    
+
+    var msg = {
+        topic: "update_data",
+        payload: {
+            id:number_id_2,
+            component: component_id,
+            code:code_id,
+            spec:spec_id,
+            project:project_id,
+            quantity_safety:quantity_safety,
+            unit:unit_id,
+            price:price_id,
+            position:position_id,
+            type:type_id,
+            pic:fileName,
+        }
+    };
+    uibuilder.send(msg);
+  }
+
+
+  function download_all() {
+    console.log("vào đây");
+}
+
+  function edit_object(){
+    
+    var see_picture_id = document.getElementById("see_picture_id");
+    see_picture_id.style.display = "none";
+
+    var edit_id = document.getElementById("edit_id")
+    edit_id.style.display = "flex";
+
+    var  home_table_id  = document.getElementById("home_table_id");
+    home_table_id.style.display = "none";
+
+
+    var component =  document.getElementById("component_pic").innerText;
+    document.getElementById("component_edit_id").value = component
+    var code =  document.getElementById("code_pic").innerText;
+    document.getElementById("code_edit_id").value = code
+    var spec =  document.getElementById("spec_pic").innerText;
+    document.getElementById("spec_edit_id").value = spec
+    var project =  document.getElementById("project_pic").innerText;
+    document.getElementById("project_edit_id").value = project
+
+    var quantity_2 =  document.getElementById("quantity_pic").innerText;
+    document.getElementById("quatity_edit_id").innerText = quantity_2
+
+    var unit =  document.getElementById("unit_pic").innerText;
+    document.getElementById("unit_edit_id").value = unit
+    var priceText = document.getElementById("price_pic").innerText;
+    // Loại bỏ ký tự "$" và khoảng trắng từ đầu và cuối chuỗi
+    var priceWithoutCurrency = priceText.replace(/\$|\s/g, "");
+    // Chuyển đổi thành số nguyên
+    var priceNumber = parseInt(priceWithoutCurrency);
+    // Gán giá trị số vào phần tử có id là "price_edit_id"
+    document.getElementById("price_edit_id").value = priceNumber;
+
+    var position =  document.getElementById("position_pic").innerText;
+    document.getElementById("position_edit_id").value = position
+
+    var type =  document.getElementById("type_pic").innerText;
+    document.getElementById("type_edit_id").value = type
+    
+    var number_2= document.getElementById("number_pic").innerText;
+    document.getElementById("add_number_edit_id").innerText  = number_2
+
+    var quantity_safety= document.getElementById("quantity_safety_pic").innerText;
+    document.getElementById("safety_quantity_edit_id").value  = quantity_safety
+  }
+
+
+
+
+
+
+
+  function inout_select_data(){
+    var type_data = document.getElementById("time_type_id").value;
+
+    if(type_data === 'all'){
+  
+        var month_id = document.getElementById("month-id")
+        month_id.style.display = "none";
+
+        var week_id = document.getElementById("year-id")
+        week_id.style.display = "none";
+
+        var input_table_id = document.getElementById("input_table_id")
+        input_table_id.style.display = "none";
+        var output_table_id = document.getElementById("output_table_id")
+        output_table_id.style.display = "none";
+        var dowmload_id = document.getElementById("dowmload_id")
+        dowmload_id.style.display = "none";
+        
+        
+    }
+    
+
+
+    if(type_data === 'month'){
+  
+        var month_id = document.getElementById("month-id")
+        month_id.style.display = "block";
+
+        var week_id = document.getElementById("year-id")
+        week_id.style.display = "none";
+
+        var input_table_id = document.getElementById("input_table_id")
+        input_table_id.style.display = "none";
+        var output_table_id = document.getElementById("output_table_id")
+        output_table_id.style.display = "none";
+        var dowmload_id = document.getElementById("dowmload_id")
+        dowmload_id.style.display = "none";
+    }
+
+    if(type_data === 'year'){
+  
+        var month_id = document.getElementById("month-id")
+            month_id.style.display = "none";
+            var week_id = document.getElementById("year-id")
+            week_id.style.display = "block";
+        var input_table_id = document.getElementById("input_table_id")
+        input_table_id.style.display = "none";
+        var output_table_id = document.getElementById("output_table_id")
+        output_table_id.style.display = "none";
+        var dowmload_id = document.getElementById("dowmload_id")
+        dowmload_id.style.display = "none";
+  }
+}
+
+
+  function check_data_inout(){
+        var loading_gif_id = document.getElementById("loading_gif_id")
+        loading_gif_id.style.display = "block"; 
+
+        var type_data_id =  document.getElementById("type_data_id").value;
+        console.log(type_data_id)
+        var type_data = document.getElementById("time_type_id").value;
+        var month = document.getElementById("month-id").value
+        var year = document.getElementById("year-id").value
+        var value_time 
+        var topic_time
+        if(type_data === 'year'){value_time = year, topic_time = 'year_check'}
+        if(type_data === 'month'){value_time = month, topic_time = 'month_check'}
+        if(type_data === 'all'){value_time = 'all', topic_time = 'all'}
+    
+        var msg = {
+        topic: type_data_id,
+        payload: {
+        type:topic_time,
+        time: value_time}
+};
+uibuilder.send(msg);
+  
+}
+
+
+
+  function signed(){
+    var user_1 = document.getElementById("user_id").value;
+    var number_ = document.getElementById("number_id").value;
+    var quantity = document.getElementById("quantity_id").value;
+    var unit = document.getElementById("unit_id").value;
+    var possition = document.getElementById("possition_id").value;
+    console.log(user_1);
+    var msg = {
+        topic: "data",
+        payload: {
+            user: user_1,
+            capacity: number_,
+            unit:unit,
+            quantity:quantity,
+            possition:possition,
+        }
+    };
+    uibuilder.send(msg);
+}
+
+
+function back_1(){
+    var see_picture_id = document.getElementById("see_picture_id");
+    see_picture_id.style.display = "none";
+    var search_result_id = document.getElementById("search_result_id");
+    search_result_id.style.display = "flex";
+    var home_table_id = document.getElementById("home_table_id");
+    home_table_id.style.display = "flex";
+    
+}
+
+function back_2(){
+    var edit_id = document.getElementById("edit_id")
+    edit_id.style.display = "none";
+    var see_picture_id = document.getElementById("see_picture_id");
+    see_picture_id.style.display = "flex";
+    var inbound_id = document.getElementById("inbound_id")
+    inbound_id.style.display = "none";
+    var outbound_id = document.getElementById("outbound_id")
+    outbound_id.style.display = "none";
+
+}
+function back_3(){
+  var inbound_id = document.getElementById("inbound_id")
+  inbound_id.style.display = "none";
+}
+function back_4(){
+  var outbound_id = document.getElementById("outbound_id")
+  outbound_id.style.display = "none";
+}
+
+function search_result(){
+    var input_type_search_id = document.getElementById("input_type_search_id").value
+    var myInput = document.getElementById("myInput").value
+    var search_result_id = document.getElementById("search_result_id");
+    search_result_id.style.display = "none";
+    var reload_id = document.getElementById("reload_id");
+    reload_id.style.display = "flex";
+    var msg = {
+        topic: "data_search",
+        payload: {
+                type:input_type_search_id,
+                data:myInput
+        }
+    };
+    uibuilder.send(msg);
+}
+
+function search_inout_result(){
+  var input_type_search_id = document.getElementById("input_type_search_id").value
+  var myInput = document.getElementById("myInput").value
+  var msg = {
+      topic: "data_inout_search",
+      payload: {
+              type:input_type_search_id,
+              data:myInput
+      }
+  };
+  uibuilder.send(msg);
+}
+
+window.onload = function () 
+{
+  if (loggedInUser) {
+    loginContainer.style.display = 'none'; // Ẩn giao diện đăng nhập
+    document.getElementById('user_text_id').textContent = loggedInUser;
+    document.getElementById('logout_button_id').style.display = 'flex';
+    document.getElementById('login_button_id').style.display = 'none';
+    // Nếu là admin, hiển thị giao diện admin và button đăng xuất
+    if (isAdmin === 'true') {
+        admin_permisstion();
+    } else {
+        user_permission();
+    }
+};
+
+    uibuilder.start()
+    {
+        var status_check = 'reload';
+        var home_class_id = document.getElementById("home_class_id")
+        home_class_id.style.display = "flex";
+        var search_result_id = document.getElementById("search_result_id")
+        search_result_id.style.display = "none";
+        var reload_id = document.getElementById("reload_id")
+        reload_id.style.display = "flex"; 
+        var msg = {
+        topic: "page_reload",
+        payload: status_check
+         };
+            uibuilder.send(msg);
+        }
+
+
+    uibuilder.onChange('msg', function (msg) 
+    { 
+        if(msg.topic === 'search_box_array'){
+          id_array = msg.payload.id_array
+          id_array =  msg.payload.id_array  
+          code_array =  msg.payload.code_array
+          name_array =  msg.payload.name_array
+          spec_array =  msg.payload.spec_array
+          position_array =  msg.payload.position_array
+          project_array =  msg.payload.project_array
+          quantity_array =  msg.payload.quantity_array
+          quantity_safety_array =  msg.payload.quantity_safety_array
+          unit_array =  msg.payload.unit_array
+          price_array =  msg.payload.price_array
+          position_array =  msg.payload.position_array    
+          type_array =  msg.payload.type_array
+          update_time_array =  msg.payload.update_time_array
+          picture_array = msg.payload.picture_array
+          var data_for_search = name_array
+          autocomplete(document.getElementById("myInput"), data_for_search);
+        }
+
+
+       
+        if (msg.topic === 'home_table_data') {
+          var search_result_id = document.getElementById("search_result_id");
+          search_result_id.style.display = "block";
+          var reload_id = document.getElementById("reload_id");
+          reload_id.style.display = "none";
+          home_table();}
+      
+if(msg.topic === 'search_data_inout')
+  {
+    // var inout_search_table_id = document.getElementById("inout_search_table_id");
+    // inout_search_table_id.style.display = "flex";
+      var data = msg.payload;
+      var table = document.getElementById("inout_search_result_table_id");
+      var data = msg.payload;
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+for (var i = 0; i < data.length; i++) {
+    var row = table.insertRow();
+    for (var j = 0; j < data[i].length; j++) {
+        var cell = row.insertCell();
+        cell.innerHTML = data[i][j];
+    }
+  }
+}
+
+
+if(msg.topic === 'empty')
+    {
+    const empty_text = document.getElementById('empty_value')
+    empty_text.innerText = msg.payload;
+    var see_picture_id = document.getElementById("see_picture_id");
+    var search_result_id = document.getElementById("search_result_id");
+    var add_id = document.getElementById("add_id")
+    var result_add_id = document.getElementById("result_add_id");
+    var button_remove_id = document.getElementById("button_remove_id")
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "none";
+    see_picture_id.style.display = "none";
+    result_add_id.style.display = "none";
+    search_result_id.style.display = "none";
+    add_id.style.display = "none";
+    button_remove_id.style.display = "none";
+    var empty_id = document.getElementById("empty_id");
+    empty_id.style.display = "block";
+    }
+
+if(msg.topic === 'warning'){
+    var a = msg.payload
+    alert(a)
+    var loading_gif_id = document.getElementById("loading_gif_id")
+    loading_gif_id.style.display = "none";
+    if(a === 'Update Success'){
+        back_1();
+    }
+}
+
+
+if(msg.topic ==='insert_data_ok'){
+        var table = document.getElementById("insert_data_table");
+        var data = msg.payload;
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
+      }
+  for (var i = 0; i < data.length; i++) {
+      var row = table.insertRow();
+      for (var j = 0; j < data[i].length; j++) {
+          var cell = row.insertCell();
+          cell.innerHTML = data[i][j];
+      }
+    }
+}
+
+if(msg.topic ==='data_updated'){
+alert("Update Success");
+var edit_id = document.getElementById("edit_id")
+var see_picture_id = document.getElementById("see_picture_id");
+edit_id.style.display = "none";
+see_picture_id.style.display = "flex";
+}
+
+if(msg.topic ==='back'){    
+    search_result();
+    }
+
+if(msg.topic === 'inbound_data_list'){
+        var table_2 = document.getElementById("input_table_id")
+        table_2.style.display = "block";
+        var dowmload_id = document.getElementById("dowmload_id")
+        dowmload_id.style.display = "flex";
+        var loading_gif_id = document.getElementById("loading_gif_id")
+        loading_gif_id.style.display = "none"; 
+
+var table = document.getElementById("table_input_id")
+    var data_2 = msg.payload;
+    console.log(data_2)
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+  }
+for (var i = 0; i < data_2.length; i++) {
+  var row = table.insertRow();
+  for (var j = 0; j < data_2[i].length; j++) {
+      var cell = row.insertCell();
+      cell.innerHTML = data_2[i][j];
+  }
+}
+}
+
+if(msg.topic === 'outbound_data_list'){
+    var table_2 = document.getElementById("output_table_id")
+    table_2.style.display = "block";
+    var dowmload_id = document.getElementById("dowmload_id")
+    dowmload_id.style.display = "block";
+    var loading_gif_id = document.getElementById("loading_gif_id")
+    loading_gif_id.style.display = "none"; 
+
+    var table = document.getElementById("table_output_id")
+    var data_2 = msg.payload;
+    console.log(data_2)
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+        }
+    for (var i = 0; i < data_2.length; i++) {
+        var row = table.insertRow();
+        for (var j = 0; j < data_2[i].length; j++) {
+            var cell = row.insertCell();
+            cell.innerHTML = data_2[i][j];
+        }
+    }
+}
+
+
+if(msg.topic === 'quantity_safety_data_list'){
+    var safety_stock_id = document.getElementById("safety_stock_id")
+    safety_stock_id.style.display = "block";
+    var table = document.getElementById("table_safety_stock_id")
+    var data_2 = msg.payload;
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+        }
+    for (var i = 0; i < data_2.length; i++) {
+        var row = table.insertRow();
+        for (var j = 0; j < data_2[i].length; j++) {
+            var cell = row.insertCell();
+            cell.innerHTML = data_2[i][j];
+        }
+    }
+}
+
+if(msg.topic ==='see_the_picture'){
+    var see_picture_id = document.getElementById("see_picture_id");
+    see_picture_id.style.display = "flex";
+    var  home_table_id  = document.getElementById("home_table_id");
+    home_table_id.style.display = "none";
+
+    const number_pic = document.getElementById('number_pic')
+    number_pic.innerText = msg.payload.id;
+
+    const time_pic = document.getElementById('time_pic')
+    time_pic.innerText = msg.payload.time; 
+    var component_pic = document.getElementById('component_pic')
+    component_pic.innerText = msg.payload.name; 
+    const code_pic = document.getElementById('code_pic')
+    code_pic.innerText = msg.payload.code;
+    const spec_pic = document.getElementById('spec_pic')
+    spec_pic.innerText = msg.payload.spec;
+    const project_pic = document.getElementById('project_pic')
+    project_pic.innerText = msg.payload.project;
+    const quantity_pic = document.getElementById('quantity_pic')
+    quantity_pic.innerText = msg.payload.quantity;
+    const unit_pic = document.getElementById('unit_pic')
+    unit_pic.innerText = msg.payload.unit;
+    const price_pic = document.getElementById('price_pic')
+    price_pic.innerText = msg.payload.price;
+    const position_pic = document.getElementById('position_pic')
+    position_pic.innerText = msg.payload.position;
+    const type_pic = document.getElementById('type_pic')
+    type_pic.innerText = msg.payload.status;
+    const pic_id = document.getElementById('pic_id')
+    pic_id.innerHTML = msg.payload.picture;
+    const name_pic = document.getElementById('name_pic')
+    name_pic.innerText = msg.payload.picname;
+    const quantity_safety_pic = document.getElementById('quantity_safety_pic')
+    quantity_safety_pic.innerText = msg.payload.quantity_safety;
+    }
+})}

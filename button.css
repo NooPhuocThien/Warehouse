@@ -1,0 +1,281 @@
+.button_text {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.button_same {
+  display: flex;
+  flex-direction: row;
+  font-size: 13px;
+  text-align: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  border: none;
+  background-color: var(--color_1);
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border-radius: 20px 0px 0px 20px;
+}
+.button_same:hover {
+  cursor: pointer;
+}
+
+.sign_button {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 11px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  font-weight: bold;
+  text-align: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-color: white;
+  border: solid 0.5px;
+  color: black;
+  border-radius: 0px 5px 5px 0px;
+  margin-right: 10px;
+}
+.sign_button:active {
+  transform: scale(0.9);
+}
+
+.search_button {
+  display: none;
+  flex-direction: row;
+  width: 100%;
+  font-size: 11px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  font-weight: bold;
+  text-align: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-color: white;
+  border: solid 0.5px;
+  color: black;
+  border-radius: 0px 5px 5px 0px;
+  margin-right: 10px;
+}
+.search_button:active {
+  transform: scale(0.9);
+}
+
+.button_added {
+  margin-right: 10px;
+  border-color: #007b63;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+}
+
+.icon_close {
+  width: 22px;
+  height: 22px;
+}
+.icon_close:active {
+  transform: scale(0.9);
+}
+.icon_close:hover {
+  cursor: pointer; /* Con trỏ chuột thành bàn tay */
+}
+
+.icon_close_login {
+  width: 22px;
+  height: 22px;
+}
+.icon_close_login:active {
+  transform: scale(0.9);
+}
+.icon_close_login:hover {
+  cursor: pointer; /* Con trỏ chuột thành bàn tay */
+  /* border: solid 1px red; 
+      border-radius: 15px; */
+}
+
+.button {
+  margin-right: 5px;
+  font-size: 15px;
+  border-color: #007b63;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+}
+.button_inout_check {
+  display: flex;
+  margin-right: 5px;
+  font-size: 15px;
+  border-color: #007b63;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  max-height: 30px;
+}
+.button_inout_download {
+  display: none;
+  font-size: 15px;
+  border-color: #007b63;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  max-height: 30px;
+}
+
+.add_row_button {
+  display: flex;
+  align-items: start;
+}
+
+.infor_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+}
+.infor_button :hover {
+  cursor: pointer;
+}
+.infor_button:active {
+  transform: scale(0.85);
+}
+
+.icon_add_inout {
+  width: 20px;
+  height: 20px;
+}
+
+.icon_remove_inoutdata {
+  width: 20px;
+  height: 20px;
+}
+.button_remove_inoutdata {
+  display: flex;
+  background-color: transparent;
+  justify-content: center;
+  border: none;
+  width: 100%;
+}
+.button_remove_inoutdata :hover {
+  cursor: pointer;
+}
+.button_remove_inoutdata :active {
+  transform: scale(0.85);
+}
+.appply_add_row_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 15px;
+  background-color: green;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  position: fixed; /* Đặt vị trí cố định để nằm đè lên các phần tử khác */
+  top: 1px; /* Vị trí từ đỉnh cửa sổ trình duyệt */
+  left: 50%; /* Để căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Để căn giữa theo chiều ngang */
+  z-index: 1000; /* Đảm bảo hiển thị trên các phần tử khác */
+  width: 50%; /* Chiều rộng của alert */
+  background-color: rgba(0, 0, 0, 0.8); /* Màu nền với độ trong suốt */
+  color: white; /* Màu chữ */
+  text-align: center; /* Căn giữa nội dung */
+  transition: opacity 0.4s; /* Hiệu ứng thay đổi độ mờ */
+  opacity: 0; /* Mặc định ẩn đi */
+}
+
+.success {
+  background-color: #4caf50; /* Màu xanh lá cây */
+  border-color: #4caf50;
+}
+
+.error {
+  background-color: #f44336; /* Màu đỏ */
+  border-color: #f44336;
+}
+
+.closebtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px 20px;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.button_warning {
+  margin: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px 10px;
+  background-color: white;
+  border: none;
+}
+
+.button_warning_class :hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.button_warning_class :active {
+  transform: scale(1.2);
+}
+
+.download_all_button_class {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border-color: #007b63;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  max-height: 30px;
+}
+.download_all_button_class:hover {
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.button_return {
+  align-items: center;
+  justify-content: center;
+  /* font-size: 15px; */
+  border-color: var(--color_1);
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+.button_return:hover {
+  cursor: pointer;
+}
+.button_return:active {
+  transform: scale(0.9);
+}

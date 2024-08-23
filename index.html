@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Warehouse</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../uibuilder/images/node-blue.ico">
+<meta name="description" content="Node-RED uibuilder - Blank template">
+
+    <!-- Your own CSS (defaults to loading uibuilders css)-->
+    <link type="text/css" rel="stylesheet" href="./index.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./table.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./responsive.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./title_bar.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./stand-tv.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./button.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./icon.css" media="all">
+    
+
+    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
+<script defer src="../uibuilder/uibuilder.iife.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="table.css">
+<link rel="stylesheet" href="responsive.css">
+<link rel="stylesheet" href="title_bar.css">
+<link rel="stylesheet" href="stand-tv.css">
+<link rel="stylesheet" href="button.css">
+<script defer src="./index.js"></script>
+<script src="xlsx.full.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> -->
+
+    <div class="header">
+        <div class="header-left">
+            <div class="icon_header_left">
+                <svg fill="var(--color_1)"  width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 26.016q0 1.632 1.6 3.008t4.384 2.176 6.016 0.8q0.128 0 0.352 0t0.32-0.032q-2.24-1.568-3.488-4.096-4.064-0.384-6.624-1.792t-2.56-3.456v3.392zM4 20q0 1.984 2.336 3.552t6.048 2.144q-0.384-1.472-0.384-2.688 0-0.096 0.128-1.28-3.648-0.512-5.888-1.824t-2.24-3.264v3.36zM4 14.016q0 2.016 2.4 3.584t6.176 2.144q0.64-2.112 2.048-3.776-3.008-0.128-5.408-0.8t-3.808-1.856-1.408-2.688v3.392zM4 8q0 1.632 1.6 3.008t4.384 2.208 6.016 0.8q0.128 0 0.384-0.032t0.352 0q2.848-1.984 6.272-1.984 0.544 0 1.632 0.16 1.568-0.832 2.464-1.888t0.896-2.272v-1.984q0-1.632-1.6-3.008t-4.384-2.176-6.016-0.832-6.016 0.832-4.384 2.176-1.6 3.008v1.984zM14.016 23.008q0 2.432 1.184 4.512t3.296 3.296 4.512 1.216 4.512-1.216 3.264-3.296 1.216-4.512q0-1.824-0.704-3.488t-1.92-2.88-2.88-1.92-3.488-0.704-3.488 0.704-2.88 1.92-1.92 2.88-0.704 3.488zM18.016 23.008q0-2.080 1.44-3.52t3.552-1.472 3.52 1.472 1.472 3.52-1.472 3.552-3.52 1.44-3.552-1.44-1.44-3.552zM20 24h2.016v2.016h1.984v-2.016h2.016v-1.984h-2.016v-2.016h-1.984v2.016h-2.016v1.984zM27.104 12.832q0.192 0.064 0.896 0.448v-2.656q0 1.216-0.896 2.208z"></path>
+                    </svg>
+            </div>
+            <div class="" style="color: #2F3478; margin-left: 10px;font-weight: bold;font-size: 25px;" >AE WAREHOUSE MANAGEMENT SYSTEM</div>
+            <!-- <div class="" style="color: #DE4032;font-weight: bold;">a</div> 
+            <div class="" style="color: #FBBC05;font-weight: bold;">r</div> 
+            <div class="" style="color: #4285F4;font-weight: bold;">e</div> 
+            <div class="" style="color: #34A853;font-weight: bold;">h</div> 
+            <div class="" style="color: #EA4335;font-weight: bold;">o</div> 
+            <div class="" style="color: #4285F4;font-weight: bold;">u</div> 
+            <div class="" style="color: #FBBC05;font-weight: bold;">s</div> 
+            <div class="" style="color: #34A853;font-weight: bold;">e</div>  -->
+        </div>
+        <div class="header-right">
+            <div class="user_login">
+                <div><img src="img/user-cicrle-svgrepo-com.svg" class="user_icon"></div>
+                <div class="user_text" id="user_text_id">User</div>
+                <div class="login_button_div">
+                    <button class="login_button_class" id="login_button_id" onclick="login_ui()">login</button>
+                    <button style="display: none;" class="login_button_class" id="logout_button_id" onclick="logout_ui()">logout</button>
+                </div>
+            </div>
+            <img src="img/robot.1938a390dbed0a6e5bad.gif " class="header_icon">
+        </div>
+    </div>
+</head>
+
+<body lang="en">
+
+
+    <div class="warning_popup" id="warning_popup_id">
+        <div class="warning_row_2">
+          <div class="button_warning_class">
+            <button class="button_warning" onclick="document.getElementById('warning_popup_id').style.display = 'none'">X</button>
+          </div>
+          <div class="warning_text_box">
+              <img src="img/apply.svg" class="icon_warning" id="icon_apply_icon" style="display: none;">
+              <img src="img/warining.svg" class="icon_warning" id="icon_error_icon" style="display: none;">
+              <div class="warning_text" id="warning_text_id">Update Success</div>
+          </div>
+        </div>
+          <div class="warning_row_3" id="warning_row_3_id">
+            <div class="warning_col">
+                <div class="warning_button">
+                    <button class="warning_button_class" style="background-color:green;color: white;" onclick="ok_delete()">OK</button>
+                </div>
+            </div>
+            <div class="warning_col">
+                <div class="warning_button">
+                    <button class="warning_button_class" style="background-color: red;color: white;" onclick="cancel_delete()">cancel</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="all">
+        <div class="left_col">
+            <div class="row_1">
+            <div class="time_class">
+                <div class="time" id="time_id">HH:mm:ss</div> 
+                <div class="date" id="date_id">YYYY-MM-DD</div>
+            </div>
+        </div>
+            <div class="all_button">        
+
+                <button class="button_same"  id="button_home_id" onclick="home()" style="background-color: var(--color_2);color: var(--color_1);"> 
+                    <div class="icon">
+                        <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="home_icon_id" class="add_icon_class" style="fill:var(--color_1)">
+                            <rect x="2" y="2" width="9" height="11" rx="2"></rect>
+                            <rect x="13" y="2" width="9" height="7" rx="2"></rect>
+                            <rect x="2" y="15" width="9" height="7" rx="2"></rect>
+                            <rect x="13" y="11" width="9" height="11" rx="2"></rect>
+                        </svg>
+                    </div>
+                    <p class="button_text">Home</p>
+                </button>
+
+                <button class="button_same" style="display: none;" id="button_add_new_id" onclick="add()" > 
+                    <div class="icon">
+                        <svg width="100%" height="100%" viewBox="0 0 1024 1024" class="icon_left_side" id="add_icon_id" version="1.1" xmlns="http://www.w3.org/2000/svg"> 
+                            <path d="M512 1024C229.7 1024 0 794.3 0 512S229.7 0 512 0s512 229.7 512 512-229.7 512-512 512z m0-938.7C276.7 85.3 85.3 276.7 85.3 512S276.7 938.7 512 938.7 938.7 747.3 938.7 512 747.3 85.3 512 85.3z"/>
+                            <path d="M682.7 554.7H341.3c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7h341.3c23.6 0 42.7 19.1 42.7 42.7s-19.1 42.7-42.6 42.7z"/>
+                            <path d="M512 725.3c-23.6 0-42.7-19.1-42.7-42.7V341.3c0-23.6 19.1-42.7 42.7-42.7s42.7 19.1 42.7 42.7v341.3c0 23.6-19.1 42.7-42.7 42.7z" />
+                        </svg>
+                    </div>
+                    <p class="button_text">Add New</p>
+                </button>
+
+                <button class="button_same" style="display: none;" id="button_inbound_id" onclick="inbound()"> 
+                    <div class="icon">
+                        <svg class="icon_left_side" id="inbound_icon_id" width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" >
+                            <path  fill-rule="evenodd" d="M0 3.25A2.25 2.25 0 012.25 1h4.379a2.25 2.25 0 011.59.659L9.342 2.78c.14.141.331.22.53.22h3.879A2.25 2.25
+                             0 0116 5.25v7.5A2.25 2.25 0 0113.75 15H2.25A2.25 2.25 0 010 12.75v-9.5zM7.75 6a.75.75 0 01.75.75V8h1.25a.75.75 0 010 1.5H8.5v1.25a.75.75 0 01-1.5 0V9.5H5.75a.75.75 
+                             0 010-1.5H7V6.75A.75.75 0 017.75 6z" clip-rule="evenodd"/>
+                        </svg>
+                  
+                    </div>
+                    <p class="button_text">Inbound</p>
+                </button>
+
+                <button class="button_same" style="display: none;" id="button_outbound_id" onclick="outbound()"> 
+                    <div class="icon">
+                        <svg class="icon_left_side" id="outbound_icon_id" width="100%" height="100%" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 2.5C0 1.67157 0.671573 1 1.5 1H5.70711L7.70711 3H13.5C14.3284 3 15 3.67157 15 4.5V12.5C15 13.3284 14.3284 14 13.5 14H1.5C0.671573 14 0 13.3284 0 12.5V2.5ZM5 9H10V8H5V9Z"/>
+                            </svg>
+                    </div>
+                    <p class="button_text">Outbound</p>
+                </button>
+
+                <button class="button_same"  style="display: none;" id="button_borrow_id" onclick="borrow_ui()"> 
+                    <div class="icon">
+                        <svg class="icon_left_side" id="borrow_icon_id" width="100%" height="100%" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m11.538 16.444-.211 5.178-.028.31-5.91-.408c-.37-.039-.696-.201-.943-.443-.277-.253-.501-.56-.654-.905l-.007-.017c-.095-.225-.167-.486-.202-.759l-.002-.015c-.009-.085-.014-.184-.014-.284 0-.223.026-.441.074-.65l-.004.019q.106-.521.165-.774c.102-.368.205-.667.324-.959l-.021.059q.239-.647.267-.743 
+                            1.099.167 7.164.392zm-5.447-8.245 2.533 5.333-2.068-1.294c-.536.606-1.051 1.269-1.524 
+                            1.964l-.044.069c-.352.503-.692 1.08-.986 1.682l-.034.077q-.338.743-.555 1.33c-.104.251-.194.548-.255.856l-.005.031-.056.295-2.673-5.023c-.15-.222-.243-.493-.253-.786v-.003c-.003-.039-.005-.085-.005-.131 0-.19.032-.372.091-.541l-.003.012.112-.253q.495-.886 1.604-2.641l-1.967-1.215zm17.32 7.275-2.641 5.051c-.109.268-.286.49-.509.652l-.004.003c-.172.136-.378.236-.602.286l-.01.002-.253.056q-.999.098-3.081.165l.112 2.311-3.236-5.164 
+                            2.971-5.094.098 2.434c.711.083 1.534.131 2.368.131.568 0 1.131-.022 1.687-.065l-.074.005c.875-.058 1.69-.224 2.462-.485l-.068.02zm-11.042-13.002q-.66.886-3.729 6.121l-4.457-2.631-.267-.165 3.166-5.009c.2-.298.49-.521.831-.632l.011-.003c.261-.097.562-.152.876-.152.088 0 .175.004.261.013l-.011-.001c.251.022.483.081.698.171l-.015-.006c.227.092.419.192.601.306l-.016-.009c.218.146.409.299.585.466l-.002-.002q.338.31.507.485t.507.555q.341.38.454.493zm9.216 
+                            4.319 2.983 5.108c.122.238.194.519.194.817 0 .09-.007.179-.019.266l.001-.01c-.058.392-.194.744-.393 1.052l.006-.01c-.133.199-.286.371-.461.518l-.004.003c-.158.137-.333.267-.517.383l-.018.01c-.194.115-.42.219-.656.301l-.027.008q-.429.155-.66.225t-.725.197l-.647.165q-.479-1.013-3.729-6.135l4.404-2.744zm-2.012-3.18 
+                            1.998-1.168-3.095 5.249-5.897-.281 2.125-1.21c-.355-.933-.71-1.702-1.109-2.443l.054.11c-.348-.671-.701-1.239-1.091-1.779l.028.041q-.485-.655-.908-1.126c-.204-.238-.42-.452-.652-.648l-.008-.007-.239-.183 5.695.014c.047-.005.101-.008.157-.008.24 0 
+                            .468.058.668.16l-.008-.004c.217.098.4.234.55.401l.001.002.155.211q.549.854 1.576 2.669z"/>
+                        </svg>
+                    </div>
+                    <p class="button_text">Borrow</p>
+                </button>
+
+                <button class="button_same" style="display: none;" id="button_history_id" onclick="history()" > 
+                    <div class="icon">
+                        <svg class="icon_left_side" id="history_icon_id" width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.6972,0.468433 C12.354,1.06178 13.7689,2.18485 14.7228,3.66372 C15.6766,5.14258 16.1163,6.89471 15.9736,8.64872 C15.8309,10.4027 15.1138,12.0607 13.9334,13.366 C12.753,14.6712 11.1752,15.5508 
+                            9.4443,15.8685 C7.71342,16.1863 5.92606,15.9244 4.35906,15.1235 C2.79206,14.3226 1.53287,13.0274 0.776508,11.4384 C0.539137,10.9397 0.750962,10.343 1.24963,10.1057 C1.74831,9.86829 2.34499,10.0801 2.58236,10.5788 
+                            C3.14963,11.7705 4.09402,12.742 5.26927,13.3426 C6.44452,13.9433 7.78504,14.1397 9.08321,13.9014 C10.3814,13.6631 11.5647,13.0034 12.45,12.0245 C13.3353,11.0456 13.8731,9.80205 13.9801,8.48654 C14.0872,7.17103 13.7574,5.85694 
+                            13.042,4.74779 C12.3266,3.63864 11.2655,2.79633 10.0229,2.35133 C8.78032,1.90632 7.42568,1.88344 6.1688,2.28624 C5.34644,2.54978 4.59596,2.98593 3.96459,3.5597 L4.69779,4.29291 C5.32776,4.92287 4.88159,6.00002 3.99069,6.00002 
+                            L1.77635684e-15,6.00002 L1.77635684e-15,2.00933 C1.77635684e-15,1.11842 1.07714,0.672258 1.70711,1.30222 L2.54916,2.14428 C3.40537,1.3473 4.43126,0.742882 5.55842,0.381656 C7.23428,-0.155411 9.04046,-0.124911 10.6972,0.468433 
+                            Z M8,4 C8.55229,4 9,4.44772 9,5 L9,7.58579 L10.7071,9.29289 C11.0976,9.68342 11.0976,10.3166 10.7071,10.7071 C10.3166,11.0976 9.68342,11.0976 9.29289,10.7071 L7,8.41421 L7,5 C7,4.44772 7.44772,4 8,4 Z"/>
+                          </svg>
+                    </div>
+                    <p class="button_text">History</p>
+                </button>
+
+                <button class="button_same" id="button_safety_id" onclick="safety_stock()"> 
+                    <div class="icon">
+                        <svg class="icon_left_side" id="safety_icon_id" width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.71539,1.97523 L15.7079,11.9717 C16.507,13.3047 15.5467,15 13.9925,15 L2.00754,15 C0.453303,15 -0.506968,13.3047 0.292148,11.9717 L6.28461,1.97523 C7.06126,0.679644 8.93874,0.679644 9.71539,1.97523 Z M8,3.00354 
+                            L2.00754,13 L13.9925,13 L8,3.00354 Z M7.99998,10.5 C8.55226,10.5 9,10.9477 9,11.5 C9,12.0523 8.55229,12.5 8,12.5 C7.44772,12.5 7,12.0523 7,11.5 C7,10.9477 7.4477,10.5 7.99998,10.5 Z M7.99998,5.5 C8.68543889,5.5 9.17162157,6.14661074 
+                            9.00884366,6.7909405 L8.97329,6.90449 L7.99998,10.5 L7.02666,6.90449 C6.77182,6.22492 7.27419,5.5 7.99998,5.5 Z"/>
+                        </svg>
+                    </div>  
+                    <p class="button_text">Safety Stock</p>
+                </button>
+            </div>
+    </div>
+        <div class="right_col">
+         <div class="row_1">
+            <div class="type_search">
+                <select class="input_type_search" id="input_type_search_id" onchange="search_type_name()">
+                    <option value="name">Component Name
+                    <option value="spec">Specifications
+                    <option value="code">Code
+                    <option value="project">Project
+                    <option value="position">Position
+                </select>
+            </div>
+            <div class="search_class">
+                <img src="img/search-alt-1-svgrepo-com.svg" class="icon_search" style="margin-left: 10px">
+                <div class="autocomplete">
+                    <input class="input_search_box" id="myInput" type="search" autocomplete="off" spellcheck="false" role="combobox"  placeholder="Search Your Component">
+                </div>
+            </div>
+            <div class="button_search_tool"> 
+                <button class="sign_button" id="sign_button_id" onclick="search_result()"> <img src="img/search.svg" class="icon">Search</button> 
+                <button class="search_button" id="search_button_id" onclick="search_result()"> <img src="img/search.svg" class="icon">search</button>
+            </div>
+        </div>
+
+<!-- ROW 2 MORE INFORMATION -->
+         <div class="row_2">
+            <div class="empty" id="empty_id">
+                <p id="empty_value">Sorry</p>
+            </div>
+            <div class="login-container" id="loginContainer">
+                <div class="close_login">
+                    <button class="close_button_login" onclick="home()" ><img src="img/close-svgrepo-com.svg" class="icon_close_login"></button> 
+                </div>
+                <h2 style="color: white;">User Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username"></label>
+                        <input type="text" class="input_login" id="username" name="username"  placeholder="User name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"></label>
+                        <input type="password"  id="password" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Đăng nhập" onclick="login_function()">
+                    </div>
+                </form>
+                <div id="loginMessage"></div>
+            </div>
+
+            <div class="home_class" id="home_class_id">
+                <div class="home_table" id="home_table_id">
+                    
+                <div class="reload" id="reload_id">
+                    <img src="img/loading-green-loading.gif" class="reload_icon">
+                 </div>
+                <div class="result" id="search_result_id">
+                    <table class="show-table" id="my-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Component Name</th>
+                                <th>Code</th>   
+                                <th>Spec</th>
+                                <th>Project</th>
+                                <th>Qts</th>
+                                <th>Qts Safe</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                                <th>Pos</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>              
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="download_all_data">
+                        <div class="download_all_button">                       
+                                <button class="download_all_button_class" onclick="excel_download_component()"> <img src="img/download-svgrepo-com.svg" class="icon">Download</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- SEE INFORMATION -->
+                <div class="see_picture" id="see_picture_id"> 
+                    <div class="information_row_1">  
+                        <div class="title_add">COMPONENT INFORMATION </div>
+                        <div class="close">
+                            <button class="close_button" onclick="back_1()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+                        </div>
+                    </div>
+                    <div class="information_row_2">
+                        <div class="column_1">
+                            <div class="row_for_earch_data">
+                                <div class="infor_left_row" style="font-weight: bold;">ID: </div>
+                                <div class="infor_row" id="number_pic" style="margin-left: 10px;">id</div>
+                            </div>
+                            <div class="row_for_earch_data">
+                                <div class="infor_left_row" style="font-weight: bold;">Picture: </div>
+                                <div class="infor_row" id="name_pic" style="margin-left: 10px;">name</div>
+                            </div>
+                        <div class="picture_class" id="pic_id" style="margin-top: 20px;"></div> 
+                    </div>
+                    <div class="column_2">
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Time:</div>
+                            <div class="infor_row" id="time_pic">Time:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Component Name:</div>
+                            <div class="infor_row" id="component_pic">Component Name: </div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Oder Code:</div>
+                            <div class="infor_row" id="code_pic">Code:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Specifications:</div>
+                            <div class="infor_row" id="spec_pic">Spec:</div>
+                        </div>
+
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Project:</div>
+                            <div class="infor_row" id="project_pic">Project:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Quatity:</div>
+                            <div class="infor_row" id="quantity_pic">Quantity:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Quatity Safety:</div>
+                            <div class="infor_row" id="quantity_safety_pic">Quantity Safe:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Unit:</div>
+                            <div class="infor_row" id="unit_pic"> Unit:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Price:</div>
+                            <div class="infor_row" id="price_pic">Price</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Position:</div>
+                            <div class="infor_row" id="position_pic">Position:</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="infor_left_row">Component type:</div>
+                            <div class="infor_row" id="type_pic">Component_type:</div>
+                        </div>
+                        <div class="information_row_3" style="display: none;" id="edit_button_id">
+                            <button class="button" onclick="edit_object()" > <img src="img/edit.svg" class="icon">Edit</button> 
+                            <button class="button_delete" onclick="delete_object()"> <img src="img/thungrac.svg" class="icon">Del</button> 
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- SEE INFORMATION END-->
+                <!-- EDIT -->
+                <div class="edit" id="edit_id">
+                    <div class="edit_row_1">
+                        <div class="title_add">EDIT</div>
+                        <div class="close">
+                            <button class="close_button" onclick="back_2()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+                        </div>
+                    </div>
+                    <div class="edit_row_2">
+                        <div class="row_for_earch_data">
+                            <div class="add_row">ID:</div>
+                            <div class="row_input" id="add_number_edit_id">Auto</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Component Name:</div>
+                            <div class="row_input"><input type="text" class="input_edit" id="component_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Oder Code:</div>
+                            <div class="row_input"><input type="text" class="input_edit" id="code_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Specifications:</div>
+                            <div class="row_input"><input type="text" class="input_edit" id="spec_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Project:</div>
+                            <div class="row_input"><input type="text" class="input_edit" id="project_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Quatity:</div>
+                            <div class="row_input"  id="quatity_edit_id">Value</div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Quatity Safety:            </div>
+                            <div class="row_input"><input type="number" class="input_edit" id="safety_quantity_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Unit:                      </div>
+                            <div class="row_input">     <select class="input_edit" id="unit_edit_id">
+                                <option value="pcs">pcs
+                                <option value="set">set
+                                <option value="machine">machine
+                                </select></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Price:                     </div>
+                            <div class="row_input"><input type="number" class="input_edit" id="price_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Position:                  </div>
+                            <div class="row_input"><input type="text" class="input_edit" id="position_edit_id"></div>
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Component type:            </div>
+                            <div class="row_input">     <select class="input_edit" id="type_edit_id">
+                                <option value="Old">Old 
+                                <option value="New">New
+                            </select> </div>    
+                        </div>
+                        <div class="row_for_earch_data">
+                            <div class="add_row">Picture:                   </div>
+                            <div class="row_input" ><input type="file"  id="picture_edit_id" accept="images"></div>
+                        </div>
+
+                    <div class="edit_row_3">
+                        <button class="button_update" id="button_update_id" onclick="update_data()"><img src="img/update-repeat-svgrepo-com.svg" class="icon">Update</button> 
+                        <button class="button_delete" onclick="delete_val()">  <img src="img/delete.svg" class="icon">Delete</button>  
+                    </div>
+                    </div>
+                </div>
+                <!-- EDIT END -->
+            </div>
+            <!-- END ROW 2 OF HOME CLASS -->
+            <!-- ADD NEW -->
+            <div class="add_class" id="add_id">
+            <div class="add_row_up">
+                <div class="add_row_1">
+                    <div class="title_add">NEW COMPONENT </div>
+                    <div class="close">
+                        <button class="close_button" onclick="back_5()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+                    </div>
+                </div>
+                <div class="add_row_3">
+                    <div class="add_row_3_left_col">
+                    <div class="row_for_earch_data">
+                        <div class="add_row">ID:                        </div>
+                        <div class="row_input" id="add_number_id" style="align-items: start;">Auto</div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Component Name:<span class="red-star">*</span></div>
+                        <div class="row_input">     <input type="text" class="input_add" id="component_id" placeholder=" ex: English( Vietnamese )"></div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Oder Code:                 </div>
+                        <div class="row_input">     <input type="text" class="input_add" id="code_id"  placeholder="--">               </div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Specifications:<span class="red-star">*</span></div>
+                        <div class="row_input">     <input type="text" class="input_add" id="spec_id" placeholder="--">               </div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Project:                   </div>
+                        <div class="row_input">     <input type="text" class="input_add" id="project_id" placeholder="--">            </div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Quatity:<span class="red-star">*</span></div>
+                        <div class="row_input">     <input type="number"class="input_add" id="quatity_id" placeholder="--">           </div>
+                    </div>
+                </div>
+                <div class="add_row_3_right_col">
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Picture:          </div>
+                    <div class="row_input">
+                        <input  type="file" class="input_add" id="picture_id" />
+                    </div>
+                    </div>
+
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Quantity Safety:  <span class="red-star">*</span>   </div>
+                        <div class="row_input">     <input type="number" class="input_add" id="quantity_safety_id" placeholder="--"></div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Unit:<span class="red-star">*</span></div>
+                        <div class="row_input"><select class="input_add" id="unit_id">
+                            <option value="pcs">pcs
+                            <option value="set">set
+                            <option value="machine">machine
+                        </select></div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Price:<span class="red-star">*</span> </div>
+                        <div class="row_input">     <input type="number" class="input_add" id="price_id" placeholder="--">               </div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Position:                  </div>
+                        <div class="row_input">     <input type="text" class="input_add" id="position_id" placeholder="--">              </div>
+                    </div>
+                    <div class="row_for_earch_data">
+                        <div class="add_row">Component type:            </div>
+                        <div class="row_input">     <select class="input_add" id="type_id" >
+                            <option value="Old">Old 
+                            <option value="New">New
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="add_row_4">
+                    <button class="button_added" id="button_added_id" onclick="add_data()">    <img src="img/add.svg" class="icon">Add</button> 
+                    <button class="button_delete" onclick="delete_val()">  <img src="img/delete.svg" class="icon">Delete</button>  
+            </div>
+        </div>
+        <div class="add_row_down">
+            <div class="result_add" id="result_add_id">
+                <table class="styled-table" id="insert_data_table">
+                    <thead>
+                        <tr>
+                            <th>Component Name</th>
+                            <th>Code</th> 
+                            <th>Spec</th>
+                            <th>Project</th>
+                            <th>Quantity</th>
+                            <th>Quantity Safety</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Position</th>
+                            <th>Type</th>
+                            <th>Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in msg.payload"> 
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+            <!-- END ADD NEW TAG -->
+
+
+            <!-- HISTORY INOUTDATA -->
+        <div class="history_class" id="history_class_id">
+            <div class="inoutdata" id="inoutdata_id">
+                <div class="inout_col_1">Select Data: </div>
+                <div class="inout_col_2">
+                        <select class="input" id="type_data_id" onchange="inout_select_data()">
+                            <option value="inbound_topic">InBound 
+                            <option value="outbound_topic">OutBound
+                            <option value="borrow_topic">Borrow
+                        </select>
+                    <div class="select_date">  
+                        <select class="input_type" id="time_type_id" onchange="inout_select_data()">
+                            <option value="all">All
+                            <option value="month">Month
+                            <option value="year">Year
+                        </select>
+
+                    <input type="month" id="month-id"   class="month-class" style="display: none;">
+                    <input type="year"  id="year-id"    class="year-class" style="display: none;">
+                    </div>
+                        <div class="inout_col_3"> 
+                            <button class="button_inout_check" onclick="check_data_inout()">  <img src="img/ok-svgrepo-com.svg" class="icon">Check</button>
+                             <button class="button_inout_download" id="dowmload_id" onclick="excel_download_inout()" >  
+                                <img src="img/download-svgrepo-com.svg" class="icon">Excel
+                            </button>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="loading_gif" id="loading_gif_id">
+                <img src="img/loading.gif" class="gif_icon">
+            </div>
+          <!-- IN TABLE -->
+            <div class="input_table_class" id="input_table_id" >
+                <table class="input_table"  id="table_input_id" >
+                    <thead>
+                        <tr>
+                            <th>Importer</th>
+                            <th>Component</th>
+                            <th>Code</th> 
+                            <th>Spec</th>
+                            <th>Project</th>
+                            <th>Inven</th>
+                            <th>Qts In</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Position</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in msg.payload"> 
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
+            <!-- END IN TABLE -->
+
+            <!-- OUT TABLE -->
+            <div class="output_table_class" id="output_table_id" >
+                <table class="output_table" id="table_output_id" >
+                    <thead>
+                        <tr>
+                            <th>Exporter</th>
+                            <th>Receiver</th>
+                            <th>Component</th>
+                            <th>Code</th> 
+                            <th>Spec</th>
+                            <th>Project</th>
+                            <th>Inven</th>
+                            <th>Qts Out</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Position</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in msg.payload"> 
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            <!-- END OUT TABLE -->
+
+             <!-- BORROW TABLE -->
+              
+            <div class="borrow_history_class" id="borrow_history_id" >
+                <table class="show-table" id="borrow_history_table_id" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Exporter</th>
+                            <th>Compontent</th>
+                            <th>Code</th>
+                            <th>Spec</th>
+                            <th>Inventory</th>
+                            <th>Borrow qts</th>
+                            <th>Unit</th>
+                            <th>Receiver</th>
+                            <th>Borrow date</th>
+                            <th>Due date</th>
+                            <th>Status</th>
+                            <th>Return date</th>
+                            <th>Verifier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                </div>
+            <!-- END BORROW TABLE -->
+        </div>
+<!-- HISTORY INOUTDATA END -->
+
+
+<!-- INOUT SEARCH -->
+    <div class="inout_search_table" id="inout_search_table_id">
+            <table class="inout_search_result_table" id="inout_search_result_table_id">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Component Name</th>
+                        <th>Code</th>   
+                        <th>Spec</th>
+                        <th>Project</th>
+                        <th>Qts</th>
+                        <th>Qts Safe</th>
+                        <th>Unit</th>
+                        <th>Price</th>
+                        <th>Pos</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Add</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table>
+            </div>
+<!-- END INOUT SEARCH -->
+
+<!-- INBOUND -->
+<div class="inbound_class" id="inbound_id">
+    <div class="inbound_row_1">
+        <div class="title_data_inbound"><img src="img/cloud.svg" class="icon_inbound">INBOUND DATA</div>
+        <div class="close">
+            <button class="close_button" onclick="back_3()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+        </div>
+    </div>
+    <div class="inbound_row_2">
+        <div class="inbound_table">
+            <table class="inout_table_styled" id="inbound_table_id">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Component Name</th>
+                    <th>Specifications</th>
+                    <th>Code</th>
+                    <th>Position</th>
+                    <th>Current Quantity</th>
+                    <th>Unit</th>
+                    <th>Quantity Input</th>     
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+        <div class="inbound_row_4">
+            <button onclick="inbound_success()" class="appply_add_row_button"> <img src="img/apply.svg" class="icon">OK</button>
+        </div>
+    </div>
+<!-- INBOUND END-->
+
+<!-- OUTBOUND -->
+<div class="outbound_class" id="outbound_id">
+    <div class="inbound_row_1">
+        <div class="title_data_inbound"><img src="img/cloud.svg" class="icon_inbound">OUTBOUND DATA</div>
+        <div class="close">
+            <button class="close_button" onclick="back_4()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+        </div>
+    </div>
+    <div class="inbound_row_2">
+        <div class="outbound_table">
+            <table class="inout_table_styled" id="outbound_table_id">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Component Name</th>
+                    <th>Specifications</th>
+                    <th>Code</th>
+                    <th>Position</th>
+                    <th>Current Quantity</th>
+                    <th>Unit</th>
+                    <th>Quantity Output</th>
+                    <th>Receiver</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+        <div class="inbound_row_4">
+            <button onclick="outbound_succes()" class="appply_add_row_button"> <img src="img/apply.svg" class="icon">OK</button>
+        </div>
+</div>
+<!-- OUTBOUND END -->
+
+<!-- BORROW   ~STEVE CỐ GẮNG THÊM VÔ CHO ÔNG GIÀ VỪA LÒNG~ -->
+    <div class="borrow_class" id="borrow_id">
+        <div class="borrow_row_1">
+            <div class="title_data_inbound"><img src="img/cloud.svg" class="icon_inbound" id="borrow_title_name_id">Borrow List</div>
+            <div class="close">
+                <button class="close_button" onclick="back_7()" ><img src="img/close-svgrepo-com.svg" class="icon_close"></button> 
+            </div>
+        </div>
+
+        <div class="borrow_row_2" id="borrow_2_table_id">
+            <div class="borrow_row_2_table">
+            <table class="inout_table_styled" id="borrow_table_id">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Component</th>
+                    <th>Spec</th>
+                    <th>Code</th>
+                    <th>Current Qts</th>
+                    <th>Unit</th>
+                    <th>Borrow Qts</th>
+                    <th>Receiver</th>
+                    <th>Date Return</th>
+                    <th>Del</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+              <div class="borrow_row_2_button" >
+                <button onclick="borrow_succes()" class="appply_add_row_button"> <img src="img/apply.svg" class="icon">OK</button>
+            </div>
+        </div>
+
+        <div class="borrow_row_3" id="borrow_due_day_table_id">
+                <table class="big_table_styled" id="due_day_table_id">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Exporter</th>
+                        <th>Compontent</th>
+                        <th>Code</th>
+                        <th>Spec</th>
+                        <th>Inventory</th>
+                        <th>Borrow qts</th>
+                        <th>Unit</th>
+                        <th>Receiver</th>
+                        <th>Borrow date</th>
+                        <th>Due date</th>
+                        <th>Status</th>
+                        <th>Finish</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
+<!-- BORROW END -->
+
+
+ <!-- SAFETY STOCK -->
+
+ <div class="safety_stock_class" id="safety_stock_id" >
+    <div class="safety_stock_row_1">
+       <div class="safety_stock_row_1_text">Statistical</div> 
+    </div>
+    <div class="safety_stock_row_2">
+        <div class="safety_stock_row_2_col">
+            <div class="safety_stock_row_2_col_left">
+                <div class="safety_stock_value" id="total_component_value_id" style="color:#55A292 ;">200</div>
+                <div class="safety_stock_title">Total component</div>
+            </div>
+            <div class="safety_stock_row_2_col_right">
+                <div class="safety_stock_icon">
+                    <img src="img/compont.svg" class="icon_stock">
+                </div>
+            </div>
+        </div>
+
+        <div class="safety_stock_row_2_col">
+            <div class="safety_stock_row_2_col_left">
+                <div class="safety_stock_value"id="total_inbound_value_id" style="color:#365DA3">2</div>
+                <div class="safety_stock_title">Inbound Last month</div>
+            </div>
+            <div class="safety_stock_row_2_col_right">
+                <div class="safety_stock_icon">
+                    <img src="img/inbound.svg   " class="icon_stock">
+                </div>
+            </div>
+        </div>
+
+        <div class="safety_stock_row_2_col">
+            <div class="safety_stock_row_2_col_left">
+                <div class="safety_stock_value" id="total_outbound_value_id" style="color:#8F7568">9</div>
+                <div class="safety_stock_title">Outbound Last month</div>
+            </div>
+            <div class="safety_stock_row_2_col_right">
+                <div class="safety_stock_icon">
+                    <img src="img/outbound.svg" class="icon_stock">
+                </div>
+            </div>
+        </div>
+
+        <div class="safety_stock_row_2_col">
+            <div class="safety_stock_row_2_col_left">
+                <div class="safety_stock_value" id="total_stock_value_id" style="color: #CD4F56;">200</div>
+                <div class="safety_stock_title">Total Stock</div>
+            </div>
+            <div class="safety_stock_row_2_col_right">
+                <div class="safety_stock_icon">
+                    <img src="img/safetystock.svg" class="icon_stock">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="safety_stock_row_3">
+        <div class="safety_stock_row_1_text">Low stock list</div> 
+     </div>
+     <div class="safety_stock_row_4">
+        <table class="safety_quantity_table" id="table_safety_stock_id" >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Component Name</th>
+                    <th>Code</th>   
+                    <th>Spec</th>
+                    <th>Project</th>
+                    <th>Quantity</th>
+                    <th>Quantity Safety</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Position</th>
+                    <th>Type</th>
+                    <th>Update time</th>
+                </tr>
+            </thead>
+            <tbody>
+        </tbody>
+        </table>
+</div>
+</div>
+ <!-- <div class="safety_stock_class" id="safety_stock_id" >
+    <table class="safety_quantity_table" id="table_safety_stock_id" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Component Name</th>
+                <th>Code</th>   
+                <th>Spec</th>
+                <th>Project</th>
+                <th>Quantity</th>
+                <th>Quantity Safety</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Position</th>
+                <th>Type</th>
+                <th>Update time</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+</div> -->
+<!-- END SAFETY STOCK -->
+
+    </div>
+</div>
+<!-- END ROW 2  -->
+
+</body>

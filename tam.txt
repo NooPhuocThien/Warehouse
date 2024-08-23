@@ -1,0 +1,35 @@
+if (msg.topic === 'read_data') {
+          var search_result_id = document.getElementById("search_result_id");
+          search_result_id.style.display = "block";
+          var reload_id = document.getElementById("reload_id");
+          reload_id.style.display = "none";
+          var data = msg.payload;
+          var tbody = document.querySelector('#my-table tbody');
+          tbody.innerHTML = '';
+          
+          data.forEach(function(rowData) {
+              var row = tbody.insertRow();
+              rowData.forEach(function(cellData, index) {
+                  var cell = row.insertCell();
+                  cell.textContent = cellData;
+                  
+                  // Kiểm tra nếu là cột quantity và có class low-quantity thì thêm style màu đỏ
+                  if (index === 5 && rowData[5] <= rowData[6]) { // 5 là index của quantity, 12 là index của quantityClass trong rowData
+                      cell.style.color = 'red';
+                      cell.style.fontWeight = 'bold';
+                  }
+                  if (index === 5 || index === 6) {
+                    cell.style.textAlign = 'center';
+                }
+              });
+      
+              // Thêm sự kiện click vào từng dòng trong table
+              row.addEventListener('click', function() {
+                  var msg = {
+                      topic: "information",
+                      payload: rowData
+                  };
+                  uibuilder.send(msg);
+              });
+          });
+      }
